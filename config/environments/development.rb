@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.assets.debug = true
+  config.hotwire_livereload.listen_paths += [
+    Rails.root.join("app/views"),
+    Rails.root.join("app/assets/builds")
+  ]
+  config.hotwire_livereload.reload_method = :turbo_stream
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
