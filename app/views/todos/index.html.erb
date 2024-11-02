@@ -17,42 +17,18 @@
 
 <p class="text-green-700 mb-4"><%= notice %></p>
 
-<div id="todos" class="flex flex-col gap-4">
-</div>
-
-<div id="source" class="hidden">
-  <%= @todos.to_json.html_safe %>
-</div>
-
-<script>
-    let search = "";
-    const todosContainer = document.getElementById("todos");
-
-    const todos = JSON.parse(document.getElementById("source").innerHTML);
-
-    function renderTodos() {
-        todosContainer.innerHTML = '';
-        todos.filter(todo => {
-            console.log(todo)
-            return todo.title ? todo.title.toLocaleLowerCase().includes(search.toLocaleLowerCase()) : false;
-        }).forEach((todo) => {
-            const todoHtml = `
-  <div class="flex flex-row gap-2 justify-between bg-gray-50 px-4 py-4 rounded-lg border border-gray-300">
-    <div>
-      <h2 class="text-lg font-bold">${todo.title}</h2>
-      <p class="${todo.completed === 1 ? 'text-green-700' : 'text-red-700'}">
-        ${todo.completed === 1 ? "Completed" : "Not Completed"}
-      </p>
-    </div>
-    <div class="flex gap-4 self-end items-baseline">
-      <a href="/todos/${todo.id}/edit" class="cursor-pointer" title="Edit todo">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 512 512" fill="currentColor">
-          <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
-        </svg>
-      </a>
-      <form action="/todos/${todo.id}" method="post" class="inline">
-        <button type="submit" class="cursor-pointer" title="Delete todo">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 448 512" fill="currentColor">
+<div id="todos" class="grid grid grid-cols-3 gap-4">
+  <% @todos.each do |todo| %>
+    <div class="flex flex-col gap-2 bg-gray-50 px-4 py-4 rounded-lg border border-gray-300">
+      <%= render todo %>
+      <div class="flex gap-4 self-end items-baseline">
+        <%= link_to edit_todo_path(todo), class: "cursor-pointer" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 512 512" fill="currentColor" title="Edit todo">
+            <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/>
+          </svg>
+        <% end %>
+        <%= button_to todo, method: :delete, class: "cursor-pointer" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 448 512" fill="currentColor" title="Delete todo">
             <path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/>
           </svg>
         </button>
