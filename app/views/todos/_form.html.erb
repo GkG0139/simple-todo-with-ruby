@@ -13,15 +13,24 @@
 
   <div>
     <%= form.label :title, style: "display: block" %>
-    <%= form.text_area :title %>
+    <%= form.text_area :title, class: "w-full rounded-lg" %>
   </div>
 
   <div>
     <%= form.label :completed, style: "display: block" %>
-    <%= form.number_field :completed %>
+    <%= form.select :completed,
+                    options_for_select(
+                      [['Not Complete', 0],
+                       ['Complete', 1]],
+                      selected: todo.completed,
+                    ),
+                    {},
+                    { class: "w-full rounded-lg" }
+    %>
   </div>
-
-  <div>
-    <%= form.submit %>
+  <h1>
+  </h1>
+  <div class="mt-8">
+    <%= form.submit class: "bg-blue-500 text-white cursor-pointer px-4 py-2 rounded-full mt-2" %>
   </div>
 <% end %>
