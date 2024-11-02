@@ -1,4 +1,4 @@
-<div id="<%= dom_id todo %>">
+<div id="<%= dom_id todo %>" xmlns="http://www.w3.org/1999/html">
   <p>
     <strong>Title:</strong>
     <%= todo.title %>
@@ -6,7 +6,9 @@
 
   <p>
     <strong>Completed:</strong>
-    <%= todo.completed === 1 ? "Completed" : "Not Completed" %>
+    <span class="<%= todo.completed == 1 ? 'text-green-700' : 'text-red-700' %>">
+    <%= todo.completed == 1 ? "Completed" : "Not Completed" %>
+    </span>
   </p>
 
 </div>
