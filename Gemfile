@@ -58,4 +58,4 @@ end
 
 gem "tailwindcss-rails", "~> 3.0"
 
-gem "hotwire-livereload", "~> 1.4", :group => :development
+gem "hotwire-livereload", "~> 2.0", :group => :development
